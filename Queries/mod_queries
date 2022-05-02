@@ -1,0 +1,37 @@
+SELECT first_name, last_name
+FROM employees
+WHERE birth_date BETWEEN '1952-01-01' AND '1955-12-31';
+
+SELECT first_name, last_name
+FROM employees
+WHERE birth_date BETWEEN '1952-01-01' AND '1952-12-31';
+
+-- Retirement eligibility
+SELECT first_name, last_name
+FROM employees
+WHERE birth_date BETWEEN '1952-01-01' AND '1955-12-31';
+
+SELECT first_name, last_name
+FROM employees
+WHERE (birth_date BETWEEN '1952-01-01' AND '1955-12-31')AND (hire_date BETWEEN '1985-01-01' AND '1988-12-31');
+
+-- Number of employees retiring
+SELECT COUNT(first_name)
+FROM employees
+WHERE (birth_date BETWEEN '1952-01-01' AND '1955-12-31')
+AND (hire_date BETWEEN '1985-01-01' AND '1988-12-31');
+
+SELECT first_name, last_name
+into retirement_info
+FROM employees
+WHERE (birth_date BETWEEN '1952-01-01' AND '1955-12-31')
+AND (hire_date BETWEEN '1985-01-01' AND '1988-12-31');
+
+SELECT Distinct on (e.emp_no) e.emp_no, e.first_name, e.last_name, t.title, t.from_date, t.to_date
+--ON (t.title)
+INTO unique_title
+FROM titles as t
+join employees as e
+on (t.emp_no = e.emp_no)
+WHERE e.birth_date between '1952-01-01' and '1955-12-31'
+order BY e.emp_no ,t.title desc;
